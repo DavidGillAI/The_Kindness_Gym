@@ -1,194 +1,174 @@
 # The Kindness Gym: Round 1 Funding Pitch Outline
 
-## Slide 1: Title
-**The Kindness Gym**
+Presentation target: approximately 6 minutes, including a short live POC demonstration.
+
+## Slide 1: The Kindness Gym
+Estimated time: 30 seconds
 
 AI-assisted training for two everyday skills:
+
 - Kindness towards yourself
 - Kindness towards others
 
-## Slide 2: The Problem
-Chart: kindness_survey_challenges_90.png (horizontal)
+Round 1 scenario:
 
-People regularly face small situations involving:
-- Self-criticism
-- Guilt
-- Personal boundaries
-- Helping others
-- Accountability after mistakes
+- Sector: Personal-development technology
+- Company size: Small early-stage company
+- Current stage: Research and working proof of concept
 
-Existing advice is often generic, while real situations depend on context.
+The central trust question is whether users can understand what the AI does and where its limitations lie.
 
-## Slide 3: The Opportunity
+## Slide 2: Everyday Kindness Can Be Difficult
+Estimated time: 40 seconds
 
-The Kindness Gym sits within the wider digital personal-development and wellness market.
+Chart: `kindness_survey_challenges_90.png`
 
-Supporting evidence includes:
-- Health & Fitness app activity
-- Comparable kindness and compassion apps
-- Subscription-app benchmarks
-- Growing use of AI-powered consumer apps
+Among the 90 survey respondents:
 
-Key limitation:
-This evidence supports market context, not validated demand for The Kindness Gym itself.
+- 62.2% found self-kindness after mistakes challenging.
+- 62.2% found setting boundaries without guilt challenging.
+- 48.9% found maintaining positive habits challenging.
 
-## Slide 4: The Solution
-A proposed personal-development app combining:
+The findings support focusing on self-criticism, guilt, boundaries and habit support.
 
-- Personalised AI guidance for everyday dilemmas
-- Practical exercises for self-kindness and kindness towards others
-- Progress tracking and habit reminders
-- An optional structured 21-day introductory programme
-- Optional insights from a verified research library
+Limitation: This was a convenience sample recruited through an extended personal and social network.
 
-The product would help users practise kindness in real situations and build consistent habits.
+## Slide 3: The Proposed Solution and Use Cases
+Estimated time: 40 seconds
 
-The pilot should test the best format rather than assume that the 21-day programme should be the main product experience.
-## Slide 5: Three Core Use Cases
-1. Everyday Kindness Coaching
-2. Structured 21-Day Kindness Course
-3. Evidence-Based Kindness Insights
+The Kindness Gym is a proposed personal-development app offering:
 
-## Slide 6: Competitive Context
-Comparable products already exist in:
-- Loving-kindness practice
-- Self-compassion
-- Kindness habit-building
-- AI-assisted wellbeing
+1. Personalised guidance for everyday kindness dilemmas
+2. Practical exercises within an optional 21-day programme
+3. Optional insights from a verified research library
 
-The proposed differentiation is the combination of:
-- Two kindness dimensions
-- Structured training
-- Contextual AI guidance
-- Evidence-based insights
+Proposed supporting features include progress tracking and habit reminders.
 
-This should be presented as a proposed differentiation, not a claim of uniqueness.
+The product is intended for personal development. It is not therapy or medical treatment.
 
-## Slide 7: Business Evidence
-Use selected Tableau charts to show:
+## Slide 4: Comparable Products Show Some Adoption
+Estimated time: 40 seconds
 
-- Health & Fitness app download activity
-- Download-to-paid conversion benchmarks
-- AI vs non-AI revenue-per-payer benchmarks
-- Comparable wellness-app download milestones
+Chart: Comparable wellness-app Google Play download milestones
 
-Every chart should include its limitation.
+Comparable products include:
 
-## Slide 8: Working Proof of Concept
+- Loving Kindness
+- The Self-Compassion App
+- BeKind
+- Holly Health
+
+These apps show consumer adoption within related categories.
+
+Limitation: Google Play milestones do not show active users, paying customers, retention or demand for The Kindness Gym.
+
+## Slide 5: Early User Interest and Concerns
+Estimated time: 45 seconds
+
+Charts:
+
+- `kindness_survey_free_interest_90.png`
+- `kindness_survey_ai_concerns_90_vertical.png`
+
+Survey findings:
+
+- 60% said they were somewhat or very likely to try a free version.
+- Privacy and personal data concerned 60%.
+- Inaccurate or inappropriate advice concerned 56.7%.
+
+These are stated preferences from a non-representative sample. They do not demonstrate customer demand or actual adoption.
+
+## Slide 6: Commercial Benchmarks
+Estimated time: 35 seconds
+
+Tableau charts:
+
+- Download-to-paid conversion: freemium compared with a hard paywall
+- Year 1 revenue per payer: AI compared with non-AI subscription apps
+
+The benchmarks illustrate possible business-model trade-offs.
+
+RevenueCat reports stronger early monetisation for AI apps alongside weaker retention. The figures cover subscription apps across many categories and do not forecast results for The Kindness Gym.
+
+## Slide 7: Working Proof of Concept
+Estimated time: 1 minute 20 seconds, including demonstration
+
 Current n8n workflow:
 
 User message → Chat Trigger → GPT-4o-mini → Kindness Gym response
 
-The POC currently demonstrates:
-- Contextual responses
-- Balanced perspective
-- One practical exercise
-- Boundary and accountability safeguards
-- Optional research inclusion
+The POC demonstrates the everyday coaching use case through:
 
-## Slide 9: What Testing Revealed
-Five formal evaluation scenarios:
+- Acknowledgement of the situation
+- A balanced perspective
+- One practical exercise
+- Optional research
+- One reflection question
+
+The workflow is a two-node proof of concept. It does not demonstrate the full app, 21-day programme, user accounts or production safeguards.
+
+Demonstrate one representative scenario.
+
+## Slide 8: Evaluation Exposed Reliability Problems
+Estimated time: 1 minute
+
+Five manually scored scenarios used five pass/fail criteria:
+
+- Autonomy
+- Accuracy
+- Accountability
+- Exercise relevance
+- Research integrity
+
+Result:
 
 - 2 PASS
 - 3 FAIL
 - 40% overall pass rate
 
-Strengths:
-- Personal and financial boundaries
-- Accountability
-- Relevant exercises
+Show two cases:
 
-Failures:
-- Research relevance
-- Citation formatting
+- Customer misinformation: PASS
+- Coffee for a colleague: FAIL
+
+Main failures:
+
+- Irrelevant research
+- Malformed or inconsistent citations
 - Unsupported reassurance
 
-Key learning:
-Prompt engineering alone is not reliable enough for critical research logic.
+The test set is small and manually assessed. It does not establish general reliability or behaviour change.
 
-## Slide 10: Proposed Technical Improvement
-Separate the system into:
+## Slide 9: Six-Week Pilot and Funding Ask
+Estimated time: 50 seconds
 
-1. Situation interpretation
-2. Research retrieval
-3. Citation handling
-4. AI coaching response
+Proposed pilot:
 
-This would reduce dependence on a single large prompt and make important logic more controllable.
+- Weeks 1–2: Product definition and design
+- Weeks 3–4: Build the focused pilot
+- Week 5: Reliability, safety and usability testing
+- Week 6: Limited pilot launch
 
-## Slide 11: Risks and Responsible Deployment
-
-Chart: kindness_survey_ai_concerns_90_vertical.png
-
-The survey identified privacy and personal data as the leading concern (60%), followed by inaccurate or inappropriate advice (56.7%).
-
-### Preliminary Assessments
-
-- **EU AI Act:** Provisionally assessed as non-high-risk for its current intended purpose. User-facing AI disclosure and further safety testing would be required.
-- **GDPR:** Free-text conversations may contain sensitive personal data. Lawful bases, retention, deletion, provider arrangements and DPIA screening remain unresolved.
-- **Environmental impact:** The current POC uses one small model call, but electricity consumption and carbon emissions have not been measured.
-
-### Pilot Priorities
-
-- Controlled research retrieval and citation handling
-- Minimal data collection and limited conversation retention
-- Clear AI disclosure and user reporting mechanism
-- Logging of model calls, tokens, latency, cost and evaluation results
-
-These are preliminary academic assessments. They do not establish legal compliance or verified environmental performance.
-
-## Slide 12: Early User Validation
-Chart: kindness_survey_free_interest_90_pie.png
-
-Exploratory survey: 90 respondents.
-
-Key findings:
-- 60% would be somewhat or very likely to try a free version.
-- 64.4% rated the concept at least moderately useful.
-- 38.9% expressed conditional willingness to pay.
-- Progress tracking and habit reminders were the most frequently selected features (47.8%).
-
-The 21-day course attracted interest from 26.7% of respondents.
-
-Limitation:
-Respondents were recruited through an extended personal and
-social network. Results indicate stated preferences, not
-representative market demand or actual purchasing behaviour.
-
-## Slide 13: Pilot Plan
-Estimated six-week pilot roadmap:
-
-- Weeks 1–2: product definition and design
-- Weeks 3–4: pilot build
-- Week 5: testing and refinement
-- Week 6: small pilot launch
-
-## Slide 14: Funding Requirement
-Estimated small-pilot budget:
+Preliminary upfront budget:
 
 **€1,700–€4,500**
 
-Primary uses:
-- AI/API and infrastructure
-- Specialist design or development support
-- Privacy/security review
-- User testing
-- Launch assets
-- Contingency
+The estimate assumes a founder-led build using existing cloud tools with limited specialist support.
 
-The estimate is preliminary and based on documented assumptions.
+Pilot safeguards would include:
 
-## Slide 15: What the Funding Would Test
-The pilot should answer:
+- Controlled research selection and citation formatting
+- Minimal personal-data collection
+- Clear disclosure of AI-generated guidance
+- Monitoring of model calls, tokens, response time, costs and evaluation results
 
-- Will users complete the 21-day programme?
-- Do they return regularly?
-- Do they find the guidance useful?
-- Can the AI system meet reliability thresholds?
-- Are users willing to pay?
-- Which features matter most?
+Ask: approve a limited pilot to test engagement, reliability, usefulness and willingness to pay.
 
-## Slide 16: The Ask
-Seek funding and approval for a limited pilot rather than a full-scale launch.
+## Slide 10: Decision Gate
+Estimated time: 15 seconds
 
-The objective of the next stage is validation, not rapid expansion.
+The next stage would test whether The Kindness Gym deserves further development.
+
+Feedback question:
+
+**Is the focused kindness-coaching use case strong enough to continue into Round 2, and what is the biggest risk we should address first?**
