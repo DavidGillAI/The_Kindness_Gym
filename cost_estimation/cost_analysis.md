@@ -38,20 +38,6 @@ The final cost will depend on the amount of specialist support required, provide
 
 These figures support an early funding conversation. They are not supplier quotations or a final implementation budget.
 
-## Preliminary Pilot Budget
-
-| Cost Area | Estimated Cost |
-|---|---:|
-| AI/API and automation tools | €150–€300 |
-| Hosting and basic infrastructure | €100–€250 |
-| UI/UX or specialist freelance support | €500–€1,500 |
-| Security/privacy review contingency | €300–€800 |
-| User testing / survey / pilot incentives | €150–€400 |
-| Branding, app assets and launch materials | €200–€500 |
-| Contingency | €300–€750 |
-
-**Estimated pilot total:** €1,700–€4,500
-
 ## Notes
 
 This estimate assumes the founder completes most product development using AI-assisted tools.

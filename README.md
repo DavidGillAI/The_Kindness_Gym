@@ -29,6 +29,10 @@ The current work includes:
 - Preliminary pilot timeline
 - Primary user survey
 
+## Round 1 Presentation
+
+View the funding pitch in Google Slides: https://docs.google.com/presentation/d/199wH7lWeK8QR4vg8MJe64yAaN16EzRtSOEQMnu4UT4I/edit?usp=sharing
+
 ## Current Proof of Concept
 
 The n8n POC accepts a user's everyday dilemma and generates:
@@ -81,7 +85,7 @@ emissions have not been measured.
 
 ## Current Status
 
-Round 1 research, POC testing, chart development, preliminary compliance assessments and commercial planning have been completed for the funding pitch. The presentation remains to be produced.
+Round 1 research, POC testing, chart development, preliminary compliance assessments and commercial planning have been completed for the funding pitch.
 
 The product has not yet been validated for market demand, willingness to pay or real-world behaviour change.
 

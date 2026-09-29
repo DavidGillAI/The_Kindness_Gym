@@ -139,36 +139,18 @@ Main failures:
 
 The test set is small and manually assessed. It does not establish general reliability or behaviour change.
 
-## Slide 9: Six-Week Pilot and Funding Ask
-Estimated time: 50 seconds
+## Slide 9: Pilot Architecture Must Make Evidence Controllable
 
-Proposed pilot:
+Proposed, not yet implemented: interpret the situation, select relevant research from an approved library, insert the citation through a fixed workflow step, then generate and check the response.
 
-- Weeks 1–2: Product definition and design
-- Weeks 3–4: Build the focused pilot
-- Week 5: Reliability, safety and usability testing
-- Week 6: Limited pilot launch
+Before testing with real users, review privacy, AI disclosure and safety reporting. Energy and carbon impact have not been measured.
 
-Preliminary upfront budget:
+## Slide 10: A Limited Six-Week Pilot
 
-**€1,700–€4,500**
+Ask: fund a focused six-week pilot with a preliminary upfront budget of €1,700–€4,500, excluding founder time.
 
-The estimate assumes a founder-led build using existing cloud tools with limited specialist support.
+Weeks 1–2: define the experience and safety rules.
+Weeks 3–4: build the focused pilot.
+Weeks 5–6: test, refine and launch to a small group.
 
-Pilot safeguards would include:
-
-- Controlled research selection and citation formatting
-- Minimal personal-data collection
-- Clear disclosure of AI-generated guidance
-- Monitoring of model calls, tokens, response time, costs and evaluation results
-
-Ask: approve a limited pilot to test engagement, reliability, usefulness and willingness to pay.
-
-## Slide 10: Decision Gate
-Estimated time: 15 seconds
-
-The next stage would test whether The Kindness Gym deserves further development.
-
-Feedback question:
-
-**Is the focused kindness-coaching use case strong enough to continue into Round 2, and what is the biggest risk we should address first?**
+Measure completion, repeat use, perceived usefulness, willingness to pay and performance on a broader safety test set.
