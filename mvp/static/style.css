@@ -1,0 +1,110 @@
+:root {
+  --green: #245747;
+  --green-dark: #173f33;
+  --sage: #eaf1eb;
+  --coral: #c87559;
+  --cream: #faf7f0;
+  --ink: #263c33;
+  --muted: #607067;
+  --border: #d8e2d9;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  line-height: 1.65;
+}
+
+.page {
+  max-width: 760px;
+  margin: auto;
+  padding: 28px 20px 48px;
+}
+
+.brand {
+  display: block;
+  width: 210px;
+  margin: 0 auto 24px;
+}
+
+.hero { text-align: center; margin-bottom: 28px; }
+
+h1 {
+  color: var(--green);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+
+.hero p, .small { color: var(--muted); }
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 28px rgba(36, 87, 71, 0.05);
+}
+
+label { display: block; font-weight: 600; margin-bottom: 10px; }
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--ink);
+  font: inherit;
+  resize: vertical;
+}
+
+button, .button {
+  display: inline-block;
+  padding: 13px 22px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--green);
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover, .button:hover { background: var(--green-dark); }
+button:disabled { opacity: 0.65; cursor: wait; }
+
+:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+}
+
+form button { width: 100%; margin-top: 16px; }
+
+.guidance p { margin: 0 0 18px; }
+.guidance p:last-child { margin-bottom: 0; }
+.situation { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.research {
+  background: var(--sage);
+  border-left: 4px solid var(--coral);
+}
+
+a { color: var(--green); }
+.small { font-size: 0.88rem; }
+footer { text-align: center; margin-top: 28px; }
+
+@media (max-width: 480px) {
+  .page { padding: 20px 14px 32px; }
+  .card { padding: 20px; }
+  .brand { width: 170px; }
+}

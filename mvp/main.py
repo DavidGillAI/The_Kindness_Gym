@@ -1,99 +1,213 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from fastapi import Form
+import re
 from html import escape
 from pathlib import Path
-from dotenv import load_dotenv
-from openai import OpenAI
 
-load_dotenv(Path(__file__).parent / ".env")
-client = OpenAI()
-SYSTEM_PROMPT = (
-    Path(__file__).parent / "system_prompt.txt"
-).read_text(encoding="utf-8")
+from dotenv import load_dotenv
+from fastapi import FastAPI, Form
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from openai import APIError, OpenAI
+
+from mvp.research import select_research
+
+
+BASE_DIR = Path(__file__).resolve().parent
+
+load_dotenv(BASE_DIR / ".env")
+client = OpenAI(timeout=30.0, max_retries=0)
+SYSTEM_PROMPT = (BASE_DIR / "system_prompt.txt").read_text(
+    encoding="utf-8"
+)
+
 app = FastAPI(title="The Kindness Gym")
+app.mount(
+    "/static",
+    StaticFiles(directory=str(BASE_DIR / "static")),
+    name="static",
+)
+
+
+def page(content: str) -> str:
+    return f"""
+    <!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>The Kindness Gym</title>
+      <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+      <main class="page">
+        <a href="/" aria-label="The Kindness Gym home">
+          <img class="brand" src="/static/logo.png"
+               alt="The Kindness Gym">
+        </a>
+        {content}
+        <footer class="small">
+          AI guidance for everyday kindness.
+          Personal development, not therapy or medical advice.
+        </footer>
+      </main>
+    </body>
+    </html>
+    """
+
+
+def dilemma_form(dilemma: str = "", error: str = "") -> str:
+    error_html = (
+        f'<p role="alert">{escape(error)}</p>' if error else ""
+    )
+
+    return f"""
+      <header class="hero">
+        <h1>Small steps. More kindness.</h1>
+        <p>A little space to think through an everyday dilemma.</p>
+      </header>
+
+      <section class="card">
+        {error_html}
+        <form action="/coach" method="post" id="dilemma-form">
+          <label for="dilemma">What's on your mind?</label>
+          <textarea id="dilemma" name="dilemma" required
+                    maxlength="4000"
+                    aria-describedby="input-note"
+                    placeholder="Describe what's happening and what you're unsure about."
+          >{escape(dilemma)}</textarea>
+          <p id="input-note" class="small">
+            Leave out names and details that could identify someone.
+          </p>
+          <button type="submit" id="submit-button">
+            Explore this dilemma
+          </button>
+          <p id="loading-message" class="small"
+             role="status" hidden>
+            Taking a moment to think this through…
+          </p>
+        </form>
+      </section>
+
+      <script>
+        const form = document.getElementById("dilemma-form");
+        const button = document.getElementById("submit-button");
+        const message = document.getElementById("loading-message");
+
+        form.addEventListener("submit", function () {{
+          button.disabled = true;
+          button.textContent = "Thinking…";
+          message.hidden = false;
+        }});
+
+        window.addEventListener("pageshow", function () {{
+          button.disabled = false;
+          button.textContent = "Explore this dilemma";
+          message.hidden = true;
+        }});
+      </script>
+    """
+
+
+def guidance_html(reply: str) -> str:
+    # Remove section headings while preserving the paragraphs.
+    headings = (
+        "Acknowledgement:",
+        "Perspective:",
+        "Kindness exercise:",
+        "Reflection:",
+    )
+
+    for heading in headings:
+        reply = reply.replace("**" + heading + "**", heading)
+        reply = reply.replace(heading, "\n\n")
+
+    paragraphs = re.split(r"\n\s*\n", reply.strip())
+
+    return "".join(
+        f"<p>{escape(paragraph.strip())}</p>"
+        for paragraph in paragraphs
+        if paragraph.strip()
+    )
 
 
 @app.get("/", response_class=HTMLResponse)
 def home():
-    return """
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>The Kindness Gym</title>
-      <style>
-        body { font-family: system-ui, sans-serif; max-width: 42rem;
-               margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
-        textarea { box-sizing: border-box; width: 100%; min-height: 10rem;
-                   padding: 0.75rem; font: inherit; }
-        button { margin-top: 1rem; padding: 0.75rem 1rem; font: inherit; }
-      </style>
-    </head>
-    <body>
-      <h1>The Kindness Gym</h1>
-      <p>Describe an everyday situation you're unsure how to handle.</p>
-      <form action="/coach" method="post">
-        <label for="dilemma">What's happening?</label>
-        <textarea id="dilemma" name="dilemma" required></textarea>
-        <button type="submit">Explore this dilemma</button>
-      </form>
-  
-    </body>
-    </html>
-    """
+    return page(dilemma_form())
+
 
 @app.post("/coach", response_class=HTMLResponse)
 def coach(dilemma: str = Form(...)):
     dilemma = dilemma.strip()
 
-    if not dilemma:
+    if not dilemma or len(dilemma) > 4000:
         return HTMLResponse(
-            'Please enter a situation. <a href="/">Go back</a>',
+            page(dilemma_form(
+                dilemma,
+                "Please enter a situation using 1–4,000 characters.",
+            )),
             status_code=400,
         )
 
-    response = client.responses.create(
-        model="gpt-4o-mini",
-        instructions=SYSTEM_PROMPT,
-        input=dilemma,
-        max_output_tokens=600,
-        store=False,
-    )
+    try:
+        response = client.responses.create(
+            model="gpt-4o-mini",
+            instructions=SYSTEM_PROMPT,
+            input=dilemma,
+            max_output_tokens=600,
+            store=False,
+        )
+    except APIError:
+        return HTMLResponse(
+            page(dilemma_form(
+                dilemma,
+                "We couldn't generate your guidance just now. "
+                "Your situation is still here, so you can try again.",
+            )),
+            status_code=502,
+        )
 
-    safe_dilemma = escape(dilemma)
-    reply = response.output_text
+    if not response.output_text.strip():
+        return HTMLResponse(
+            page(dilemma_form(
+                dilemma,
+                "No guidance came back this time. Please try again.",
+            )),
+            status_code=502,
+        )
 
-    for heading in (
-        "Acknowledgement:",
-        "Perspective:",
-        "Kindness exercise:",
-        "Reflection:",
-    ):
-        reply = reply.replace("**" + heading + "**", "")
-        reply = reply.replace(heading, "")
+    research = select_research(dilemma)
+    research_html = ""
 
-    safe_reply = escape(reply.strip())
+    if research:
+        research_html = f"""
+          <aside class="card research">
+            <h2>Did you know?</h2>
+            <p>{escape(research["insight"])}</p>
+            <a href="{escape(research["url"], quote=True)}"
+               target="_blank" rel="noopener noreferrer">
+              Read the study ↗
+            </a>
+          </aside>
+        """
 
-    return f"""
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>The Kindness Gym</title>
-      <style>
-        body {{ font-family: system-ui, sans-serif; max-width: 42rem;
-                margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }}
-        .text {{ white-space: pre-wrap; }}
-      </style>
-    </head>
-    <body>
-      <h1>The Kindness Gym</h1>
-      <h2>Your situation</h2>
-      <p class="text">{safe_dilemma}</p>
-      <h2>Your guidance</h2>
-      <div class="text">{safe_reply}</div>
-      <p><a href="/">Explore another situation</a></p>
-    </body>
-    </html>
+    content = f"""
+      <header class="hero">
+        <h1>A moment for kindness.</h1>
+        <p>Take what helps, and choose what feels right for you.</p>
+      </header>
+
+      <section class="card">
+        <h2>Your situation</h2>
+        <p class="situation">{escape(dilemma)}</p>
+      </section>
+
+      <section class="card guidance">
+        <h2>Your guidance</h2>
+        {guidance_html(response.output_text)}
+      </section>
+
+      {research_html}
+
+      <a class="button" href="/">Explore another situation</a>
     """
+
+    return page(content)
