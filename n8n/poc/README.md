@@ -87,3 +87,36 @@ A stronger architecture would separate:
 The workflow is suitable as a Round 1 proof of concept.
 
 It is not production-ready and should not be presented as a validated product.
+
+## How to Reproduce
+
+1. Import `Kindness Gym POC.json` into n8n.
+2. Connect the OpenAI node to your own OpenAI credentials.
+3. Open the Chat Trigger's test chat.
+4. Enter an everyday dilemma and run the workflow.
+5. Check that the response gives a balanced perspective, exactly one exercise and one reflection question. If it cites research, check that the study is relevant and the citation is accurate.
+
+The workflow requires n8n and access to the OpenAI API. Results may vary between runs, and the five-case evaluation above is the recorded Round 1 result.
+
+## Round 2 POC
+
+Workflow export: `Kindness Gym Round 2 POC.json`
+Model: `gpt-4o-mini`
+
+The workflow separates research selection, AI guidance and final formatting:
+
+1. Chat Trigger receives the dilemma.
+2. Research selects the approved study using keyword rules, or returns no study.
+3. OpenAI generates the acknowledgement, perspective, exercise and reflection.
+4. Merge combines the AI response with the selected research.
+5. Format Response checks heading order, blocks model-generated citation URLs
+   and inserts approved research before the reflection.
+
+The formatter controls citation insertion but does not validate advice quality.
+The keyword selector is a limited POC approach, not a general research retrieval system.
+
+Development findings are recorded in
+`../../evaluation/round2_poc_results.md`.
+
+The POC is not production-ready. Remaining issues include multiple suggested
+actions, added obligations in boundary scenarios and limited research selection.
