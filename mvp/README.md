@@ -17,11 +17,20 @@ This is an early MVP for Round 2. It is not a validated or production-ready prod
 
 ## How it works
 
-FastAPI serves the interface and sends the situation to OpenAI using `gpt-4o-mini`.
+FastAPI serves the interface and sends the situation to OpenAI using
+`gpt-5.6-sol` with reasoning effort set to `none`.
 
-The system prompt asks for an acknowledgement, a balanced perspective, exactly one practical exercise and one reflection question.
+The system prompt asks for an acknowledgement, a balanced perspective,
+1–3 alternative kindness actions and 2–5 Radical gratitude points.
+Responses use British English.
 
-Research selection and citation display are handled separately from the model. The current research library contains one approved study. A keyword filter decides whether to show it.
+Research selection and citation display are handled separately from
+the model. The current library contains one approved study, selected
+using a keyword filter.
+
+A preliminary five-case comparison with `gpt-4o-mini` is documented in
+`evaluation/mvp_model_comparison.md`. Sol showed better boundary handling
+and accountability in those responses, but broader evaluation is needed.
 
 ## Run locally
 
