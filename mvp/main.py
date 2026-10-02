@@ -108,26 +108,55 @@ def dilemma_form(dilemma: str = "", error: str = "") -> str:
 
 
 def guidance_html(reply: str) -> str:
-    # Remove section headings while preserving the paragraphs.
     headings = (
         "Acknowledgement:",
         "Perspective:",
         "Kindness exercise:",
-        "Reflection:",
+        "Radical gratitude:",
     )
 
     for heading in headings:
         reply = reply.replace("**" + heading + "**", heading)
-        reply = reply.replace(heading, "\n\n")
 
-    paragraphs = re.split(r"\n\s*\n", reply.strip())
+    parts = []
+    paragraph = []
+    bullets = []
 
-    return "".join(
-        f"<p>{escape(paragraph.strip())}</p>"
-        for paragraph in paragraphs
-        if paragraph.strip()
-    )
+    def flush_paragraph():
+        if paragraph:
+            text = " ".join(paragraph)
+            parts.append(f"<p>{escape(text)}</p>")
+            paragraph.clear()
 
+    def flush_bullets():
+        if bullets:
+            items = "".join(
+                f"<li>{escape(text)}</li>" for text in bullets
+            )
+            parts.append(f"<ul>{items}</ul>")
+            bullets.clear()
+
+    for line in reply.splitlines():
+        text = re.sub(r"^#{1,6}\s*", "", line.strip())
+
+        if text in headings:
+            flush_paragraph()
+            flush_bullets()
+            if text == "Radical gratitude:":
+                parts.append("<h2>Radical gratitude</h2>")
+        elif not text:
+            flush_paragraph()
+        elif re.match(r"^[-*•]\s+", text):
+            flush_paragraph()
+            bullets.append(re.sub(r"^[-*•]\s+", "", text))
+        else:
+            flush_bullets()
+            paragraph.append(text)
+
+    flush_paragraph()
+    flush_bullets()
+
+    return "".join(parts)
 
 @app.get("/", response_class=HTMLResponse)
 def home():
@@ -149,7 +178,9 @@ def coach(dilemma: str = Form(...)):
 
     try:
         response = client.responses.create(
-            model="gpt-4o-mini",
+            # model="gpt-4o-mini",
+            model="gpt-5.6-sol",
+            reasoning={"effort": "none"},
             instructions=SYSTEM_PROMPT,
             input=dilemma,
             max_output_tokens=600,
@@ -159,7 +190,7 @@ def coach(dilemma: str = Form(...)):
         return HTMLResponse(
             page(dilemma_form(
                 dilemma,
-                "We couldn't generate your guidance just now. "
+                "We couldn't put together a response just now. "
                 "Your situation is still here, so you can try again.",
             )),
             status_code=502,
@@ -169,7 +200,7 @@ def coach(dilemma: str = Form(...)):
         return HTMLResponse(
             page(dilemma_form(
                 dilemma,
-                "No guidance came back this time. Please try again.",
+                "No response came back this time. Please try again.",
             )),
             status_code=502,
         )
@@ -201,7 +232,7 @@ def coach(dilemma: str = Form(...)):
       </section>
 
       <section class="card guidance">
-        <h2>Your guidance</h2>
+        <h2>TKG’s perspective</h2>
         {guidance_html(response.output_text)}
       </section>
 
