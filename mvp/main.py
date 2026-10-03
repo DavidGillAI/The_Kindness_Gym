@@ -7,6 +7,7 @@ from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from openai import APIError, OpenAI
+from time import perf_counter
 
 from mvp.research import select_research
 
@@ -62,6 +63,7 @@ def dilemma_form(dilemma: str = "", error: str = "") -> str:
     return f"""
       <header class="hero">
         <h1>Small steps. More kindness.</h1>
+        <p>AI-powered guidance.<br>
         <p>A little space to think through an everyday dilemma.</p>
       </header>
 
@@ -175,15 +177,16 @@ def coach(dilemma: str = Form(...)):
             )),
             status_code=400,
         )
-
+    started = perf_counter()
     try:
         response = client.responses.create(
             # model="gpt-4o-mini",
-            model="gpt-5.6-sol",
+            model="gpt-5.6-luna",
+            # model="gpt-5.6-sol",
             reasoning={"effort": "none"},
             instructions=SYSTEM_PROMPT,
             input=dilemma,
-            max_output_tokens=600,
+            max_output_tokens=3000,
             store=False,
         )
     except APIError:
@@ -195,7 +198,23 @@ def coach(dilemma: str = Form(...)):
             )),
             status_code=502,
         )
+    elapsed = perf_counter() - started
 
+    print(
+        f"METRICS model={response.model} "
+        f"seconds={elapsed:.2f} status={response.status}",
+        flush=True,
+    )
+
+    if response.usage:
+        print(
+        f"REASONING requested=none returned={response.reasoning}",
+        flush=True,
+    )
+        print(
+            "TOKEN_USAGE " + response.usage.model_dump_json(),
+            flush=True,
+        )
     if not response.output_text.strip():
         return HTMLResponse(
             page(dilemma_form(
@@ -223,7 +242,8 @@ def coach(dilemma: str = Form(...)):
     content = f"""
       <header class="hero">
         <h1>A moment for kindness.</h1>
-        <p>Take what helps, and choose what feels right for you.</p>
+        <p>AI-powered guidance.<br>
+Take what helps, and choose what feels right for you.</p>
       </header>
 
       <section class="card">
@@ -237,8 +257,16 @@ def coach(dilemma: str = Form(...)):
       </section>
 
       {research_html}
-
+ Need someone to talk to?
+        <a href="https://findahelpline.com/"
+           target="_blank" rel="noopener noreferrer">
+          Find support in your country
+        </a>
+        <br></br>
       <a class="button" href="/">Explore another situation</a>
+            <p class="support-link">
+       
+      </p>
     """
 
     return page(content)
