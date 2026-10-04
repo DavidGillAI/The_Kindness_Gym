@@ -123,6 +123,7 @@ def guidance_html(reply: str) -> str:
     parts = []
     paragraph = []
     bullets = []
+    section = None
 
     def flush_paragraph():
         if paragraph:
@@ -144,13 +145,31 @@ def guidance_html(reply: str) -> str:
         if text in headings:
             flush_paragraph()
             flush_bullets()
-            if text == "Radical gratitude:":
+            section = text
+
+            if section == "Radical gratitude:":
                 parts.append("<h2>Radical gratitude</h2>")
-        elif not text:
+
+            continue
+
+        if not text:
             flush_paragraph()
-        elif re.match(r"^[-*•]\s+", text):
+            continue
+
+        is_bullet = bool(re.match(r"^[-*•]\s+", text))
+
+        if section in ("Acknowledgement:", "Perspective:"):
+            flush_bullets()
+
+            if is_bullet:
+                text = re.sub(r"^[-*•]\s+", "", text)
+
+            paragraph.append(text)
+
+        elif is_bullet:
             flush_paragraph()
             bullets.append(re.sub(r"^[-*•]\s+", "", text))
+
         else:
             flush_bullets()
             paragraph.append(text)
