@@ -272,17 +272,29 @@ Take what helps, and choose what feels right for you.</p>
 
       <section class="card guidance">
         <h2>TKG’s perspective</h2>
-        {guidance_html(response.output_text)}
-      </section>
 
-      {research_html}
- Need someone to talk to?
+        {guidance_html(response.output_text)}
+    <p class="support-link">
+       Need someone to talk to?
         <a href="https://findahelpline.com/"
            target="_blank" rel="noopener noreferrer">
           Find support in your country
         </a>
+        </section>
+    </p>
+
+      {research_html}
+<div class="response-actions">
         <br></br>
-      <a class="button" href="/">Explore another situation</a>
+  <a class="button" href="/">Explore another situation</a>
+  <p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdm-tMulOPi0rw3CGlQLSgsmFpl9-BliaeHqdbV1_PvUhbqdg/viewform"
+       target="_blank" rel="noopener noreferrer">
+      Share feedback or suggest a feature ↗
+    </a>
+  </p>
+</div>
+</p>
             <p class="support-link">
        
       </p>
