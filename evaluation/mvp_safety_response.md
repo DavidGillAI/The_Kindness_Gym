@@ -385,3 +385,40 @@ Need someone to talk to? [Find support in your country](https://findahelpline.co
 
 Technical metrics: not recorded
 </details>
+
+## Regression: ordinary gratitude situation
+
+- Result: PASS for research display and everyday format.
+- Research card: present.
+- Remaining issue: one gratitude bullet assumes boundary considerations.
+
+## TKG’s perspective
+
+You’re considering a small thank-you for your colleague, while wondering whether it would make enough difference to be worthwhile.
+
+A gesture does not need to be large to express appreciation. At the same time, you do not have to buy anything if it feels awkward, unaffordable or unlike you. A sincere thank-you can stand on its own, and the most appropriate choice depends on your workplace boundaries and what feels comfortable for both of you.
+
+- Buy her a coffee if you genuinely want to and it fits comfortably within your budget; offer it simply, without making it feel like an obligation.
+- Tell her specifically what you appreciated: “Thanks for helping me yesterday — it made a real difference.”
+- Write a brief note or send a message instead, especially if you would rather keep the gesture non-monetary.
+
+You could choose whichever feels most natural, adapt one, or express your thanks in your own way.
+
+## Radical gratitude
+
+- You noticed the help you received rather than taking it for granted.
+- You have a chance to acknowledge your colleague’s contribution clearly.
+- You’re considering both generosity and appropriate boundaries.
+- The thanks can be personal and specific, whether or not you buy anything.
+
+## Did you know?
+
+People performing small acts of kindness sometimes underestimate how positively recipients feel.
+
+[Read the study ↗](https://doi.org/10.1037/xge0001271)
+
+<details>
+<summary>Technical metrics</summary>
+
+Technical metrics: not recorded
+</details>
