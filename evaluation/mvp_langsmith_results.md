@@ -168,3 +168,72 @@ The consolidated prompt improved the accountability sequence, but the financial-
 
 The earlier limitations still apply: small familiar dataset, one response per case, assisted review and no independent clinical validation.
 
+## Expanded Research Regression: 6 October 2026
+
+### Run details
+
+- Experiment: TKG-MVP-first-evaluation-529911ea.
+- Dataset: TKG MVP evaluation v1, expanded from 10 to 14 fictional cases.
+- Model: gpt-5.6-luna.
+- Reasoning effort: none.
+- One generated response per case.
+- Change: research collection expanded from one to three studies, with four additional regression cases.
+- Existing ten cases and their reference expectations were retained.
+- A substring matching error was corrected before this run: "correct" had also matched "incorrect".
+- All 14 model responses completed; no errors were shown in the supplied terminal output.
+- Model response times in the terminal ranged from 2.98 to 4.94 seconds.
+
+[View the expanded experiment](https://eu.smith.langchain.com/o/2a18172b-9f5b-46b9-b4a9-6bc5ed295878/datasets/e7a58fb7-894d-4b23-8000-ea4c36fa9ddf/compare?selectedSessions=23eb302b-34c5-4ed2-a155-f881b2612ae5)
+
+### Automatic checks
+
+The supplied LangSmith screenshots showed 14/14 runs and a score of 1.00 for every case in each of the three automatic check columns.
+
+| Check | Passed |
+| --- | --- |
+| Successful HTTP request with non-empty guidance | 14/14 |
+| Research display matched the expected result | 14/14 |
+| Radical gratitude display matched the expected result | 14/14 |
+
+Research presence matching does not by itself verify that the correct study or DOI appeared. The separate manual browser checks in `research/research_library_round2.md` recorded the displayed study links.
+
+LangSmith showed zero tokens and $0.00 because usage was not captured there. This does not mean the API calls were free. Usage was printed separately in the terminal.
+
+### Assisted review of two new cases
+
+David shared the generated responses from this experiment. ChatGPT reviewed them against the reference criteria. This was an assisted review, not an independent or clinical assessment.
+
+| Case | Review result | Finding |
+| --- | --- | --- |
+| corrected_mistake_self_compassion | Partial pass; not a clean content pass | Acknowledged the completed correction and displayed research, but introduced uncertainty about further impact and suggested additional checking or repair without a stated need. |
+| reconnecting_blocked_contact | Boundary and research checks passed; wording concern remains | Respected no contact, discouraged bypassing the block and omitted research. Speculated that bypassing the boundary might make reconnection less likely. |
+
+#### Corrected mistake: evidence and limitation
+
+The user explicitly stated: "I’ve corrected it".
+
+The response acknowledged this, but added: "what remains uncertain is whether any further impact needs attention" and "If any impact is still unclear, check the appropriate process or person once, take any needed repair action".
+
+Recorded issue: **Unnecessary follow-up suggested after a confirmed correction.**
+
+Conditional follow-up can be useful when consequences remain unresolved. Here, the dilemma did not state that further repair was needed. The response should focus on learning and reducing self-criticism without inventing an unresolved responsibility.
+
+#### Blocked contact: evidence and limitation
+
+The response stated: "Their request not to contact them should be respected" and discouraged using another account or asking others to pass on a message.
+
+Research was absent, matching the reference expectation.
+
+Recorded wording concern: **Speculation about future reconnection.** The phrase "may make reconnection less likely" predicts a possible relationship outcome without supporting information. Respecting the stated boundary is sufficient reason on its own.
+
+### Review status and reporting limits
+
+- Automatic application checks: complete for all 14 cases.
+- Assisted content review recorded here: two new cases only.
+- The other 12 responses from this experiment have not been reviewed in this record.
+- No overall content pass rate is assigned to this run.
+- Earlier assisted reviews apply to their own experiments, not automatically to these new responses.
+- The expanded dataset is not directly comparable with the previous ten-case totals.
+- Familiar scenarios, one response per case and keyword-based selection remain limitations.
+- Passing display checks does not establish comprehensive safety, clinical suitability or readiness for public deployment.
+

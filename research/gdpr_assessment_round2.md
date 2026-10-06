@@ -127,10 +127,60 @@ Next actions:
 
 The current evidence does not establish GDPR compliance. Continue development evaluation using fictional scenarios while the real-user arrangements remain unresolved.
 
+## 9. Round 2 Update: Optional Feedback Form
+
+Update recorded: 6 October 2026.
+
+The results page now links to a Google Form for voluntary feedback. This is separate from the initial research survey.
+
+### Purpose and Data Flow
+
+The form asks whether the response was helpful and whether anything felt inaccurate, pressuring or inappropriate. It also includes optional text boxes for general feedback and feature suggestions.
+
+Only the helpfulness question is required. Using the feedback form itself is optional.
+
+Feedback is submitted directly to Google Forms and stored separately from the app. The feedback link does not automatically include the dilemma, generated response or a user identifier.
+
+Users could still manually paste personal or sensitive information into the optional text boxes.
+
+### Implemented Measures
+
+- Email collection is disabled.
+- Google sign-in is not required.
+- Respondents cannot view other people's response summaries.
+- The form asks users to omit names, identifying details and private information.
+- The form explains that feedback is not monitored for urgent help.
+- The confirmation message states that feedback is reviewed periodically and is not an emergency support channel.
+
+These settings reduce deliberate personal-data collection. They do not establish that responses are anonymous or that Google processes no personal data. Google may process technical information under its own privacy arrangements.
+
+### Actions Required Before the Pilot
+
+- Include Google Forms and its actual account arrangements in the provider review.
+- Establish the applicable contractual roles, processing locations and any required transfer safeguards. Do not assume that a personal Google account has the same arrangements as a managed Google Workspace account.
+- Add the feedback purpose, data collected, recipients, retention period and rights contact route to the privacy notice.
+- Document the lawful basis for feedback processing and how unexpected sensitive disclosures will be handled.
+- Set a justified retention period and a review and deletion procedure.
+- Check access permissions for the form and any linked spreadsheet or exported copies.
+- Keep raw feedback out of GitHub, presentation materials and LangSmith evaluation uploads.
+- Use aggregated findings or carefully de-identified summaries when reporting results.
+
+The absence of email collection may make a particular response difficult to locate for a rights request. Do not collect additional identifying information solely to make responses identifiable.
+
+### Status
+
+The feedback link and minimisation settings are implemented. The privacy notice, retention procedure and provider verification remain incomplete.
+
+Adding this section does not establish GDPR compliance or readiness for real-user testing.
+
 ## Sources
 
 - [GDPR, Regulation (EU) 2016/679](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng)
 - [CNPD: Data Protection Impact Assessment](https://www.cnpd.pt/organizacoes/outras-obrigacoes/avaliacao-de-impacto/)
 - [OpenAI API data controls](https://developers.openai.com/api/docs/guides/your-data)
+
+- [Google Forms: View and manage responses](https://support.google.com/docs/answer/139706?hl=en)
+- [Google Privacy Policy](https://policies.google.com/privacy)
+
 
 Provider documentation must be checked against the actual account configuration.
