@@ -179,6 +179,10 @@ def guidance_html(reply: str) -> str:
 
     return "".join(parts)
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 @app.get("/", response_class=HTMLResponse)
 def home():
     return page(dilemma_form())
