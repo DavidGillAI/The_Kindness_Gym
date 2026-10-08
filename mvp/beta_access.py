@@ -111,6 +111,20 @@ def remove_tester(tester_id):
         )
     return result.rowcount == 1
 
+def create_tester_with_reference():
+    import hashlib
+
+    code = create_tester()
+    code_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
+
+    with connect_db() as connection:
+        tester_id = connection.execute(
+            "SELECT id FROM beta_testers WHERE code_hash = %s",
+            (code_hash,),
+        ).fetchone()[0]
+
+    return tester_id, code
+
 if __name__ == "__main__":
     try:
         with connect_db() as connection:

@@ -139,7 +139,8 @@ def dilemma_form(dilemma: str = "", error: str = "") -> str:
     <a href="mailto:davidstevengill+beta_testers@gmail.com">
       davidstevengill+beta_testers@gmail.com
     </a>.
-    Please do not email your dilemma or full access code.
+    For requests about your records, include your tester reference number.
+    Please do not email your dilemma or access code.
   </p>
 </details>
 
