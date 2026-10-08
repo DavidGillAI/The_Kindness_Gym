@@ -98,6 +98,19 @@ def reserve_usage(code):
 
     return "allowed"
 
+def remove_tester(tester_id):
+    with connect_db() as connection:
+        connection.execute("SELECT pg_advisory_xact_lock(746201)")
+        connection.execute(
+            "DELETE FROM beta_daily_usage WHERE tester_id = %s",
+            (tester_id,),
+        )
+        result = connection.execute(
+            "DELETE FROM beta_testers WHERE id = %s",
+            (tester_id,),
+        )
+    return result.rowcount == 1
+
 if __name__ == "__main__":
     try:
         with connect_db() as connection:

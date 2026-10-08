@@ -94,11 +94,58 @@ def dilemma_form(dilemma: str = "", error: str = "") -> str:
                     placeholder="Describe what's happening and what you're unsure about."
           >{escape(dilemma)}</textarea>
           <p id="input-note" class="small">
-            Leave out names and details that could identify someone.
-          </p>
-          <button type="submit" id="submit-button">
-            Explore this dilemma
-          </button>
+  Leave out names, contact details and sensitive personal information
+  about yourself or anyone else.
+</p>
+
+<details class="small">
+  <summary>Beta privacy information</summary>
+
+  <p>
+    The Kindness Gym beta is operated by David Gill.
+    When AI guidance is enabled, your situation is processed by this
+    app on Render and sent to OpenAI to generate a response.
+  </p>
+
+  <p>
+    Our Neon database stores a hash of your access code, its active
+    status and submission dates and times to manage beta access and
+    daily limits. It does not store your situation or AI response.
+    Hosting and AI providers may retain technical or security records
+    under their own policies.
+  </p>
+
+  <p>
+    OpenAI may retain prompts and responses for abuse monitoring,
+    normally for up to 30 days, with exceptions. Disabling response
+    storage does not guarantee zero retention.
+  </p>
+
+  <p>
+    The optional feedback form uses Google Forms.
+    Please leave out private or identifying details there too.
+  </p>
+ 
+  <p>
+  We keep beta access and usage records during the testing period
+  and delete them within 30 days after the beta ends.
+  You can also contact us to request removal of your records
+  and closure of your beta access.
+  </p>
+
+  <p>
+    For privacy questions or requests concerning your access and
+    usage records, contact
+    <a href="mailto:davidstevengill+beta_testers@gmail.com">
+      davidstevengill+beta_testers@gmail.com
+    </a>.
+    Please do not email your dilemma or full access code.
+  </p>
+</details>
+
+<button type="submit" id="submit-button">
+  Explore this dilemma
+</button>
           <p id="loading-message" class="small"
              role="status" hidden>
             Taking a moment to think this through…
