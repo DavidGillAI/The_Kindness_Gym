@@ -8,6 +8,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from openai import APIError, OpenAI
 from time import perf_counter
+from mvp.beta_access import reserve_usage
+from psycopg import Error as DatabaseError
 
 from mvp.research import select_research
 
@@ -70,6 +72,21 @@ def dilemma_form(dilemma: str = "", error: str = "") -> str:
       <section class="card">
         {error_html}
         <form action="/coach" method="post" id="dilemma-form">
+          <label for="access-code">Beta access code</label>
+          <input type="password"
+                 id="access-code"
+                 name="access_code"
+                 required
+                 maxlength="100"
+                 autocomplete="off"
+                 aria-describedby="beta-note">
+
+          <p id="beta-note">
+            One submission per day, resetting at midnight in Lisbon.
+            A submission counts even if AI guidance fails to load.
+            Keep your access code private.
+          </p>
+
           <label for="dilemma">What's on your mind?</label>
           <textarea id="dilemma" name="dilemma" required
                     maxlength="4000"
@@ -189,7 +206,7 @@ def home():
 
 
 @app.post("/coach", response_class=HTMLResponse)
-def coach(dilemma: str = Form(...)):
+def coach(dilemma: str = Form(...), access_code: str = Form("")):
     dilemma = dilemma.strip()
 
     if not dilemma or len(dilemma) > 4000:
@@ -200,6 +217,42 @@ def coach(dilemma: str = Form(...)):
             )),
             status_code=400,
         )
+
+    try:
+        access_status = reserve_usage(access_code)
+    except (DatabaseError, RuntimeError):
+        return HTMLResponse(
+            page(dilemma_form(
+                dilemma,
+                "Beta access is temporarily unavailable. Please try later.",
+            )),
+            status_code=503,
+        )
+
+    access_errors = {
+        "invalid_code": (
+            "Please enter a valid beta access code.", 403
+        ),
+        "daily_limit": (
+            "You've used today's submission. Please come back tomorrow. "
+            "The limit resets at midnight in Lisbon.", 429
+        ),
+        "beta_limit": (
+            "The beta has reached today's overall limit. "
+            "Please come back tomorrow.", 429
+        ),
+    }
+
+    if access_status != "allowed":
+        message, status_code = access_errors.get(
+            access_status,
+            ("Beta access is temporarily unavailable.", 503),
+        )
+        return HTMLResponse(
+            page(dilemma_form(dilemma, message)),
+            status_code=status_code,
+        )
+
     started = perf_counter()
     try:
         response = client.responses.create(

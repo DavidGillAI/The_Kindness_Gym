@@ -4,3 +4,4 @@ python-dotenv==1.2.3
 python-multipart==0.0.32
 uvicorn==0.54.0
 langsmith==0.14.1
+psycopg[binary]==3.3.6
