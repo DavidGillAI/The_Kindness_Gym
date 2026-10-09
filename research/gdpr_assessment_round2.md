@@ -1,7 +1,7 @@
 # The Kindness Gym: Preliminary GDPR Assessment
 
-Assessment updated: 4 October 2026
-Status: Round 2 academic assessment, implementation and provider verification incomplete.
+Assessment updated: 9 October 2026
+Status: Hosted beta controls partly implemented and tested. Lawful-basis, provider and other privacy work remains incomplete; this assessment does not establish GDPR compliance.
 
 ## 1. Current Scope
 
@@ -13,7 +13,7 @@ The n8n proof of concept remains a separate project artefact. Its provider setti
 
 LangSmith is used to evaluate fictional scenarios. Live user submissions are not intentionally included in that evaluation workflow.
 
-This assessment describes the development setup. It does not establish readiness for a public pilot.
+This assessment covers the hosted Render app, Neon beta-access database and optional Google Forms feedback route, as well as fictional evaluation. Deployment occurred on 8 October. The planned six-week pilot is not recorded as started. Technical deployment does not establish readiness for unrestricted public use.
 
 ## 2. Data Flow and Minimisation
 
@@ -21,14 +21,17 @@ This assessment describes the development setup. It does not establish readiness
 | --- | --- | --- |
 | Dilemma text | Sent to OpenAI to generate guidance | May contain personal data about the user or other people |
 | Generated guidance | Returned to the browser | May repeat personal information from the submission |
-| Request metadata | Local server access logs | May include IP addresses and request details |
+| Request metadata | Local and hosted server/provider logs | May include IP addresses and request details; actual retention requires verification |
+| Beta access and usage records | Neon stores tester reference, code hash, active status, submission date and reservation timestamp | Pseudonymous access and quota records; not anonymous if linked to invitations |
+| Private invitation records | Founder retains codes and tester references outside the repository | Keep private; define access, retention and deletion separately |
+| Optional feedback | Submitted directly to Google Forms | May contain personal information even without email collection |
 | Timing and token metrics | Printed in the terminal | Used for technical evaluation |
 | Fictional evaluation inputs and outputs | Stored in LangSmith and project files | Must remain fictional and free of real identifying details |
-| API credentials | Loaded from a local environment file | Must remain private and excluded from Git |
+| API and database credentials | Local environment file and separately configured Render environment variables | Must remain private and excluded from Git, documentation and slides |
 
 The interface asks users to leave out names and identifying details. That reminder reduces risk but does not prevent sensitive disclosures.
 
-The app has no implemented conversation-history database. This does not mean that browsers, providers or development tools retain nothing.
+The app has no implemented conversation-history database. Neon stores access and usage records, not dilemma text or generated guidance. The access code is submitted to the app for validation; only its hash is retained in the database. This does not mean that browsers, providers or development tools retain nothing.
 
 Before a pilot, verify every location where submissions, responses or metadata could be recorded, including exception logs and any enabled tracing.
 
@@ -48,7 +51,7 @@ Before real-user testing, document the processing purposes, lawful bases and app
 
 ### OpenAI
 
-The app uses an API key supplied through the Ironhack instance account. The relevant account owner, contractual arrangements and project-level data controls must be identified.
+The app uses an API key supplied through the Ironhack instance account. The teacher has explicitly authorised its use for external beta testing. This permission does not settle controller/processor roles, contractual arrangements or project-level data controls, which still require verification.
 
 Requests use `store=False`. This setting must not be described as Zero Data Retention. OpenAI documents separate abuse-monitoring and caching arrangements, with behaviour dependent on the endpoint and account configuration.
 
@@ -62,20 +65,32 @@ Using an EU endpoint does not establish all contractual, subprocessor, retention
 
 Keep evaluation uploads restricted to fictional cases. Do not enable live-user tracing without a documented purpose, privacy review and appropriate controls.
 
+### Render and Neon
+
+The app uses Render Free hosting in Frankfurt and Neon Free Postgres in AWS Frankfurt. Selected regions do not establish that all provider processing remains in the EU. Verify the actual account agreements, subprocessors, technical logs, backups, access controls and international-transfer arrangements.
+
+Neon records are used to validate access codes and enforce quotas. Treat them as pseudonymous records where they can be linked to an invitation, rather than anonymous data. A code identifies an allowance, not a verified person.
+
 ### Other services
 
 The research and support links open external websites. Their privacy arrangements are separate. Do not add user dilemma text or identifiers to those links.
 
-Any future hosting, analytics or monitoring service must be added to this assessment before use.
+Google Forms is covered in section 9. Any additional analytics or monitoring service must be reviewed before use.
 
 ## 5. Retention, Deletion and User Rights
 
-No complete retention schedule or user-rights procedure has been implemented.
+A beta privacy notice and contact route are live: davidstevengill+beta_testers@gmail.com. The notice describes Render, OpenAI, Neon, optional feedback and the limits of application storage controls. It is an initial notice, not a completed Article 13 assessment.
+
+The stated retention commitment is to delete beta access and usage records within 30 days after the beta ends. The MVP README documents a manual cleanup procedure. No automatic deletion job exists, and end-of-beta cleanup has not yet been run. Record the beta end date, deletion deadline and completion evidence.
+
+The `remove_tester(tester_id)` function deletes a tester and its usage records. A temporary-record test confirmed that both were removed and the code then became invalid. This covers active application records, not all provider backups, logs or optional feedback. Verify requests against the original invitation before acting; a numeric reference alone is not proof of identity. Do not ask people to email their dilemma or access code.
+
+A complete retention schedule and rights procedure remains unfinished, including feedback, private invitation mappings and provider-held records.
 
 Before a pilot:
 
 - Define justified retention periods for logs, evaluation records and any stored user data.
-- Provide a contact route for applicable access, correction, deletion and other rights requests.
+- Complete the procedure behind the implemented contact route for applicable access, correction, deletion and other rights requests.
 - Verify identity only to the extent necessary.
 - Coordinate provider-held data requests with the relevant account owner.
 - Document provider retention, backup and deletion limitations.
@@ -88,7 +103,9 @@ Current development measures include keeping credentials outside source control,
 
 These measures do not constitute a complete security assessment.
 
-The app currently runs locally. WiFi testing used HTTP rather than HTTPS. The temporary firewall allowance was removed after testing.
+The app now runs on Render over HTTPS and uses TLS for Neon database connections. Credentials are configured separately in Render and locally. Earlier local WiFi testing used HTTP; its temporary firewall allowance was removed.
+
+Private codes enforce one submission daily per code and an overall 20 daily, with resets based on Europe/Lisbon. Invalid-code and repeat-use rejection have been observed. The overall-cap boundary and concurrent-request behaviour still need explicit tests. Quotas reduce API use but do not replace broader abuse prevention or an account-level spending threshold.
 
 Before external testing, review HTTPS, access restrictions, abuse controls, credential management, logging and breach-response procedures. Confirm that support and research links contain no submission data.
 
@@ -106,11 +123,11 @@ Consider sensitive disclosures, vulnerable users, third-party information, scale
 
 | Area | Status |
 | --- | --- |
-| Current data flow | Described at development level |
+| Current data flow | Updated for Render, OpenAI, Neon and optional feedback; provider verification incomplete |
 | Data minimisation | Partly implemented |
 | Lawful basis and Article 9 condition | Not finalised |
-| Privacy notice and contact route | Not implemented |
-| Retention and user-rights procedures | Not implemented |
+| Privacy notice and contact route | Initial beta notice and contact live; full notice review incomplete |
+| Retention and user-rights procedures | Tester removal tested; manual end-of-beta database cleanup documented; broader procedure incomplete |
 | Provider agreements and account responsibilities | Not verified |
 | Processing locations and transfers | Not verified |
 | Security review for external testing | Incomplete |
@@ -120,9 +137,9 @@ Consider sensitive disclosures, vulnerable users, third-party information, scale
 Next actions:
 
 1. Verify provider controls and responsibilities with the Ironhack account owner.
-2. Finalise the intended pilot audience, hosting and processing purposes.
+2. Confirm the intended adult pilot audience and processing purposes; hosting is selected and deployed.
 3. Complete lawful-basis and DPIA screening work.
-4. Prepare an accurate privacy notice and rights contact route.
+4. Complete the existing notice and rights procedure, including lawful basis, feedback retention and provider limitations.
 5. Implement and test the required retention, access and security controls.
 
 The current evidence does not establish GDPR compliance. Continue development evaluation using fictional scenarios while the real-user arrangements remain unresolved.
@@ -158,7 +175,7 @@ These settings reduce deliberate personal-data collection. They do not establish
 
 - Include Google Forms and its actual account arrangements in the provider review.
 - Establish the applicable contractual roles, processing locations and any required transfer safeguards. Do not assume that a personal Google account has the same arrangements as a managed Google Workspace account.
-- Add the feedback purpose, data collected, recipients, retention period and rights contact route to the privacy notice.
+- Expand the existing beta notice: it mentions optional Google Forms feedback and a rights contact, but the complete feedback purpose, data, recipients and justified retention period still need review.
 - Document the lawful basis for feedback processing and how unexpected sensitive disclosures will be handled.
 - Set a justified retention period and a review and deletion procedure.
 - Check access permissions for the form and any linked spreadsheet or exported copies.
@@ -169,7 +186,7 @@ The absence of email collection may make a particular response difficult to loca
 
 ### Status
 
-The feedback link and minimisation settings are implemented. The privacy notice, retention procedure and provider verification remain incomplete.
+The feedback link and reported minimisation settings are implemented. The initial beta notice now mentions Google Forms and a contact route. Feedback-specific retention, a complete notice and provider verification remain incomplete. The form settings were reported during development and should be rechecked before recruitment.
 
 Adding this section does not establish GDPR compliance or readiness for real-user testing.
 
