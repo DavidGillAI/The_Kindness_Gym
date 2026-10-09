@@ -1,7 +1,7 @@
 # The Kindness Gym: Round 2 EU AI Act Assessment
 
-Assessment date: 4 October 2026
-Status: Preliminary academic assessment of the current MVP.
+Assessment updated: 9 October 2026
+Status: Preliminary academic assessment of the hosted MVP. Implementation status updated; unresolved obligations remain open.
 
 The Round 1 assessment remains unchanged in `eu_ai_act_assessment.md`.
 
@@ -38,7 +38,7 @@ The founder develops the application under The Kindness Gym name. If supplied or
 
 Using a third-party model does not automatically transfer all application responsibilities to the model supplier.
 
-OpenAI supplies the underlying model. The current MVP accesses it through an Ironhack account. The contracting arrangements and permission to use that account for a public pilot require confirmation.
+OpenAI supplies the underlying model. The current MVP accesses it through an Ironhack account. The teacher has explicitly authorised use of the supplied API key for external beta testing. Contracting arrangements, account responsibilities and data controls still require confirmation.
 
 Providing an app free of charge does not automatically exempt it from the AI Act. Development-stage exclusions must not be assumed to cover a real-user deployment.
 
@@ -130,7 +130,7 @@ Before a pilot, document a short operating guide covering:
 - Privacy-conscious handling of reports.
 - When to pause the app and seek specialist advice.
 
-No formal operator guide or completed training record is claimed in this assessment.
+The updated MVP README documents deployment, configuration, quotas, tester creation and removal, and manual database cleanup. The pilot plan proposes reporting and pause procedures. These provide partial operating documentation; no complete incident process or completed training record is claimed.
 
 ## 6. Prohibited Practices: Article 5
 
@@ -175,12 +175,16 @@ Any future paid tiers or charity advertising must avoid using guilt, distress or
 | Input validation | Trimmed input, 1–4,000 characters |
 | Output display | Escaped text, paragraphs and bullet lists |
 | Research selection | Deterministic keyword rules |
-| Research collection | One currently implemented study |
+| Research collection | Three curated studies |
 | Citations | Application-controlled source link |
 | Support directory | Fixed link displayed on results pages |
 | Evaluation | Fictional examples in LangSmith EU |
 | Runtime recording | Timing, response status and token usage |
-| Current deployment | Local development and testing |
+| Current deployment | Render Free web service in Frankfurt, deployed 8 October |
+| Beta access | Private bearer codes, with hashes and usage records in Neon Postgres |
+| Request limits | One submission per code daily; 20 overall daily; Europe/Lisbon reset |
+| Privacy and removal | Initial notice/contact live; temporary tester-record removal tested |
+| Feedback | Optional Google Forms link; complete review routine pending |
 
 Research selection is not a vector database or a comprehensive retrieval system.
 
@@ -190,31 +194,28 @@ The app requests `store=False`. This does not establish zero provider retention.
 
 ## 8. Evaluation Findings
 
-The LangSmith dataset contains ten fictional cases:
+The latest recorded experiment, on 6 October, used an expanded dataset of 14 fictional cases and three curated studies. All three automatic checks passed for 14/14 cases:
 
-- Five ordinary dilemmas.
-- Five sensitive cases, including suicidal thoughts, immediate danger, violence, instruction override and mixed gratitude/crisis content.
+1. Successful HTTP request with non-empty guidance.
+2. Research display matching the reference expectation.
+3. Gratitude display matching the reference expectation.
 
-Three recorded experiments checked:
+Model response times recorded in the terminal ranged from 2.98 to 4.94 seconds. These are evaluation measurements, not hosted-service latency guarantees.
 
-1. Successful response generation.
-2. Research display matching expectations.
-3. Gratitude display matching expectations.
+Research-presence checks do not establish that the correct study was selected or that the advice was appropriate. Separate manual browser checks recorded the displayed study links.
 
-All ten cases passed those three automatic checks in each recorded experiment.
+Only two responses from the expanded experiment received the assisted content review recorded in the results document:
 
-These checks assess response delivery and selected display behaviour. They do not assess all factual, ethical or safety qualities.
+- A corrected-mistake response introduced an unsupported need for further checking or repair.
+- A blocked-contact response respected the stated boundary and omitted research, but speculated about future reconnection.
 
-The latest assisted content review recorded eight of ten content passes under its stated criteria:
+The other 12 responses from this experiment have not been reviewed in that record. No overall content pass rate is assigned to the expanded run.
 
-- Three of five ordinary cases.
-- Five of five sensitive cases.
+Earlier ten-case experiments and their assisted reviews remain historical evidence. The final ten-case experiment recorded 8/10 content passes, with presentation assessed separately. That result cannot be transferred to the new 14 responses or described as an overall current safety score.
 
-Remaining ordinary-case issues included repetitive alternatives, unsupported wording and suggestions inconsistent with financial boundaries.
+The review was assisted by ChatGPT, not independent or clinical. Passing these automatic checks does not establish comprehensive safety or legal compliance.
 
-Sensitive-case responses generally prioritised human support and omitted gratitude and research. Some included unnecessary or unrelated wording.
-
-Presentation problems were assessed separately. A subsequent rendering change keeps acknowledgement and perspective as paragraphs, with suggestions and gratitude as lists.
+Deployment checks on 8 October additionally confirmed database connectivity, invalid-code rejection, hosted AI guidance, daily-limit rejection and removal of a temporary tester and its usage records. The overall-cap boundary and concurrent requests have not been explicitly tested. These operational checks are separate from advice-quality evaluation.
 
 ### Evaluation limits
 
@@ -250,7 +251,7 @@ The current app does not monitor users, contact emergency services or provide a 
 
 Safety instructions and directory links must not imply those capabilities.
 
-A pilot reporting and review procedure is not yet implemented.
+An optional feedback form and a beta contact route are implemented. The form explains that feedback is not an emergency channel. A complete reporting, triage and review procedure has not yet been established; the pilot plan proposes a routine.
 
 Proposed procedure:
 
@@ -275,20 +276,20 @@ Routine review of real dilemma text must not be introduced without addressing it
 | Resolve known content failures | Incomplete |
 | Assess machine-readable output marking | Unresolved |
 | Document operator AI literacy measures | Partially evidenced; guide pending |
-| Provide reporting and incident procedure | Not implemented |
-| Confirm provider roles and account arrangements | Pending |
-| Complete privacy safeguards for real-user testing | Pending |
-| Review final configuration before deployment | Pending |
+| Provide reporting and incident procedure | Feedback/contact routes live; complete operating procedure pending |
+| Confirm provider roles and account arrangements | API use permission confirmed; roles and contractual arrangements pending |
+| Complete privacy safeguards for real-user testing | Initial notice, contact and record removal implemented; broader GDPR work incomplete |
+| Review final configuration before deployment | Hosted deployment and selected checks complete; overall-cap/concurrency checks pending |
 
 The founder is the proposed owner of these actions. Specialist advice is needed where legal, privacy or safety issues exceed the founder's competence.
 
-Hosting, paid subscriptions and advertising remain proposals, not implemented features.
+Hosting and the free one-per-day allowance are implemented. Paid subscriptions, higher tier limits and advertising remain proposals.
 
 ## 12. Conclusion
 
 The current MVP is provisionally assessed as a non-high-risk AI system subject to applicable transparency and other obligations.
 
-Round 2 has added visible AI disclosure, controlled citations, documented evaluation and safety-oriented prompt rules.
+Round 2 has added visible AI disclosure, controlled citations, expanded fictional evaluation, safety-oriented prompt rules and a hosted deployment with private codes and daily quotas. These controls do not resolve the outstanding legal or response-quality issues.
 
 Important gaps remain, particularly output-marking assessment, operator procedures, reporting, privacy arrangements and response consistency.
 
@@ -296,7 +297,7 @@ The project should be presented as an evaluated academic MVP with documented lim
 
 ## Sources
 
-Checked on 4 October 2026:
+Original legal source review: 4 October 2026. Implementation update: 9 October 2026. Article 4 and Article 50 service-desk pages revisited during this update; a comprehensive fresh legal review is not claimed.
 
 - Consolidated EU AI Act:
   https://eur-lex.europa.eu/eli/reg/2024/1689
