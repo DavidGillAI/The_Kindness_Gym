@@ -4,6 +4,33 @@ An AI guide to help people think through everyday dilemmas and practise kindness
 
 Developed by David Gill as an Ironhack final capstone. The app supports personal development; it is not therapy, medical advice or an emergency service.
 
+## Project at a glance
+
+| Question | Answer |
+| --- | --- |
+| Problem | Turn an everyday dilemma into a manageable action while respecting uncertainty, personal boundaries and financial limits. |
+| Solution | A FastAPI app with AI guidance, separately selected research cards, private beta access and persistent usage limits. |
+| Skills demonstrated | Requirements definition, prompt iteration, workflow integration, evaluation, deployment and operational planning. |
+| Evidence | A documented hosted deployment, a 14-case application regression run and an explicit record of content failures and remaining checks. |
+| Current limit | A controlled MVP; usefulness, sustained behaviour change and readiness for wider use remain unproven. |
+
+![The Kindness Gym beta interface, showing the access-code and dilemma form](docs/images/kindness-gym-preview.jpg)
+
+*Hosted interface captured on 19 November 2026. No access code or personal dilemma was entered.*
+
+## My contribution and use of AI
+
+I developed this project as my Ironhack final capstone, using AI assistance for coding and review. My focus was defining the product behaviour and boundaries, iterating the prompts, connecting the application and beta-access workflow, and checking the results against documented criteria.
+
+The repository records both working features and unresolved findings. Response reviews assisted by ChatGPT are labelled as assisted reviews; they are not independent assessments. The project demonstrates an AI implementation process rather than a claim that I wrote every line of code independently.
+
+### Start with the evidence
+
+- [Evaluation results and known failure patterns](evaluation/mvp_langsmith_results.md)
+- [Beta setup, access controls and deployment checks](mvp/README.md)
+- [Proposed pilot and readiness work](deployment/round2_pilot_plan.md)
+- [Cost and ROI assumptions](cost_estimation/round2_roi_analysis.md)
+
 ## Current status: Round 2 hosted MVP
 
 The FastAPI app was deployed on 8 October 2026. Hosted AI guidance, private tester access and the daily submission limit have been checked manually.
@@ -91,6 +118,16 @@ Manual deployment checks completed on 8 October:
 
 The overall daily cap, simultaneous-request behaviour and broader outage/error scenarios still require testing.
 
+### Offline error-message checks
+
+With the app dependencies and `httpx` installed, run:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+These regression checks replace OpenAI and database access with fakes. They verify that provider failures and empty replies explain the consumed daily allowance and the midnight Lisbon reset. They do not exercise the real database or establish wider readiness.
+
 ## Privacy and remaining readiness work
 
 The app displays a privacy summary and asks users to omit identifying and sensitive personal information. The beta contact is `davidstevengill+beta_testers@gmail.com`. Testers should use their reference number for record-related requests and should not email their dilemma or secret code.
@@ -133,4 +170,4 @@ Actual electricity consumption and carbon emissions have not been measured. The 
 | `feedback/` | Round 1 feedback and decisions |
 | `presentation/` | Presentation supporting materials |
 
-Documentation updated 9 October 2026, based on deployment and test results recorded on 8 October. Remaining checks are stated explicitly rather than treated as complete.
+Portfolio presentation updated 19 November 2026. Historical deployment and model-evaluation results above retain their original October dates; they have not been rerun for this documentation update.

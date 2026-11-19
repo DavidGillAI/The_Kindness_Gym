@@ -318,7 +318,8 @@ def coach(dilemma: str = Form(...), access_code: str = Form("")):
             page(dilemma_form(
                 dilemma,
                 "We couldn't put together a response just now. "
-                "Your situation is still here, so you can try again.",
+                "This attempt has used today's submission. "
+                "Your allowance resets at midnight in Lisbon.",
             )),
             status_code=502,
         )
@@ -343,7 +344,9 @@ def coach(dilemma: str = Form(...), access_code: str = Form("")):
         return HTMLResponse(
             page(dilemma_form(
                 dilemma,
-                "No response came back this time. Please try again.",
+                "No response came back this time. "
+                "This attempt has used today's submission. "
+                "Your allowance resets at midnight in Lisbon.",
             )),
             status_code=502,
         )
